@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href="/tailwind.css" rel="stylesheet" />
+    <title>Source list</title>
+    <script src="sourceList.js"></script>
+
+    <style>
+      @font-face {
+        font-family: myFirstFont;
+        src: url(OpenSans-Medium.ttf);
+      }
+      .containerDIV {
+        font-size: 12pt;
+        float: left;
+        width: 95%;
+        margin-left: 7pt;
+        margin-bottom: 7pt;
+      }
+      li {
+        height: 25pt;
+        display: flex;
+        align-items: center;
+      }
+      .sources {
+        font-family: "Times New Roman", Times, serif;
+      }
+    </style>
+  </head>
+  <body id="body" style="width: 100%">
+    <div class="containerDIV">
+      <div>
+        <button
+          id="clear"
+          class="
+            bg-red-500
+            hover:bg-red-400
+            text-white
+            font-bold
+            py-2
+            px-3
+            border-b-4 border-red-500
+            hover:border-red-400
+            rounded
+          "
+          style="margin-top: 8pt"
+        >
+          Clear sources
+        </button>
+        <button
+          id="update"
+          class="
+            bg-blue-500
+            hover:bg-blue-400
+            text-white
+            font-bold
+            py-2
+            px-3
+            border-b-4 border-blue-500
+            hover:border-blue-400
+            rounded
+          "
+          style="margin-top: 8pt"
+        >
+          Update
+        </button>
+      </div>
+      <div style="display: flex; justify-content: flex-start; margin-top: 3pt">
+        <ul id="btnList" style="margin-right: 4pt"></ul>
+        <ul id="sources" class="sources">
+          <li>Add some sources to begin!</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
