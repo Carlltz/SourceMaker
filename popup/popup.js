@@ -35,6 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  document.getElementById("test").addEventListener("click", function () {
+    console.log("Tab:");
+    console.log(getTabId());
+  });
 });
 
 /* // Import the functions you need from the SDKs you need
