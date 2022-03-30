@@ -32,6 +32,12 @@
       }
       .sources {
         font-family: "Times New Roman", Times, serif;
+        color: white;
+      }
+      body {
+        background-color: rgb(44, 44, 44);
+        background-size: stretch;
+        margin: 0px;
       }
     </style>
   </head>
@@ -40,37 +46,24 @@
       <div>
         <button
           id="clear"
-          class="
-            bg-red-500
-            hover:bg-red-400
-            text-white
-            font-bold
-            py-2
-            px-3
-            border-b-4 border-red-500
-            hover:border-red-400
-            rounded
-          "
+          class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-3 border-b-4 border-red-500 hover:border-red-400 rounded"
           style="margin-top: 8pt"
         >
           Clear sources
         </button>
         <button
           id="update"
-          class="
-            bg-blue-500
-            hover:bg-blue-400
-            text-white
-            font-bold
-            py-2
-            px-3
-            border-b-4 border-blue-500
-            hover:border-blue-400
-            rounded
-          "
+          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-3 border-b-4 border-blue-500 hover:border-blue-400 rounded"
           style="margin-top: 8pt"
         >
           Update
+        </button>
+        <button
+          id="copySources"
+          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-3 border-b-4 border-blue-500 hover:border-blue-400 rounded"
+          style="margin-top: 8pt"
+        >
+          Copy sources
         </button>
       </div>
       <div style="display: flex; justify-content: flex-start; margin-top: 3pt">

@@ -19,9 +19,19 @@
       textarea {
         width: 98%;
       }
-      label {
+      .text {
         float: left;
         margin-left: 4pt;
+        color: white;
+        font-weight: 500;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      }
+      .textBigger {
+        font-size: 1.5rem;
+        line-height: 2rem;
       }
       .borderDIV {
         border-radius: 3pt;
@@ -31,66 +41,75 @@
         text-align: center;
       }
       .mainDiv {
-        background-color: rgb(250, 250, 250);
+        background-color: rgb(44, 44, 44);
+        background-size: stretch;
+        margin: 0px;
       }
       .topButton {
         margin-top: 6pt;
         margin-bottom: 8pt;
       }
+      textarea {
+        border-radius: 0.4rem;
+        border-color: rgb(0 0 0);
+      }
+      button {
+        --mainBackgroundColor: rgba(30, 143, 255, 0.7);
+        --mainBorderColor: dodgerblue;
+        --activeButton: rgba(30, 143, 255, 1);
+        background-color: var(--mainBackgroundColor);
+        border: 2px solid var(--mainBorderColor);
+        backdrop-filter: blur(5px);
+        border-radius: 10px;
+        transition: border-radius 200ms ease-in-out;
+        padding: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      button:hover {
+        border-radius: 5px;
+      }
+      button:active {
+        background-color: var(--activeButton);
+      }
     </style>
   </head>
-  <body style="width: 300pt">
-    <div class="mainDiv rounded-b-xl">
-      <div
-        style="
-          display: flex;
-          flex-wrap: nowrap;
-          flex-direction: column;
-          justify-content: space-evenly;
-          text-align: center;
-          background-color: lightskyblue;
-          border-bottom: 3pt solid rgb(68, 183, 255);
-        "
-        class="rounded-b-2xl"
-      >
-        <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly">
-          <button
-            id="saveSource"
-            class="topButton bg-blue-400 hover:bg-blue-300 text-white font-bold py-2 px-3 border-b-4 border-blue-400 hover:border-blue-300 rounded"
-          >
-            Save this source
-          </button>
-          <button
-            id="openSourceList"
-            class="topButton bg-blue-400 hover:bg-blue-300 text-white font-bold py-2 px-3 border-b-4 border-blue-400 hover:border-blue-300 rounded"
-          >
-            Open source list
-          </button>
-          <button
-            id="test"
-            class="topButton bg-blue-400 hover:bg-blue-300 text-white font-bold py-2 px-3 border-b-4 border-blue-400 hover:border-blue-300 rounded"
-          >
-            Test
-          </button>
-        </div>
-        <!--     <input list="test" name="yazz" />
+  <body style="width: 290pt" class="mainDiv">
+    <div
+      style="
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: center;
+        background-color: rgb(58, 58, 58);
+        border-bottom: 3pt solid rgb(50, 50, 50);
+      "
+      class="rounded-b-2xl"
+    >
+      <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly; padding: 1rem 0rem">
+        <button class="text textBigger" id="saveSource">Lägg till</button>
+        <button class="text textBigger" id="openSourceList">Källhänvisning</button>
+      </div>
+      <!--     <input list="test" name="yazz" />
     <datalist id="test">
         <option value="red">
         <option value="blue">
     </datalist> -->
-      </div>
-      <div style="text-align: center">
-        <label for="title">Title:</label>
-        <textarea id="title" name="title" rows="2" class="rounded border-1 border-black"></textarea>
-
-        <label for="site">Site:</label>
-        <textarea id="site" name="site" rows="2" class="rounded border-1 border-black"></textarea>
-
-        <label for="date">Date:</label>
-        <textarea id="date" name="date" rows="2" class="rounded border-1 border-black"></textarea>
-      </div>
     </div>
+    <div style="text-align: center">
+      <label class="text" for="title">Titel:</label>
+      <textarea id="title" name="title" rows="2"></textarea>
 
+      <label class="text" for="site">Hemsida:</label>
+      <textarea id="site" name="site" rows="2"></textarea>
+
+      <label class="text" for="date">Datum:</label>
+      <textarea id="date" name="date" rows="2"></textarea>
+
+      <label class="text" for="author">Skribent:</label>
+      <textarea id="author" name="author" rows="2"></textarea>
+    </div>
     <!--     <div id='content'>Loading...</div> -->
   </body>
 </html>

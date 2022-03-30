@@ -1,11 +1,10 @@
 {
-    "name": "SourceMaker",
-    "version": "1.0",
-    "manifest_version": 2,
-    "description": "Make a sourcelist",
-  "browser_action": {
+  "name": "SourceMaker",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Make a sourcelist",
+  "action": {
     "default_popup": "./popup/popup.html"
   },
-  "permissions": ["tabs", "<all_urls>", "storage", "unlimitedStorage"],
-  "content_security_policy": "script-src 'self' https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js; object-src 'self'"
+  "permissions": ["tabs", "activeTab", "storage", "unlimitedStorage", "scripting"]
 }

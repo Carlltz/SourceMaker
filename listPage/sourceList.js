@@ -1,9 +1,12 @@
 let editingSourceNum = -1;
 let numberOfSources = 0;
-let storage = chrome.storage.local;
+let storage = chrome.storage.sync;
+let preSourceList;
 
 document.addEventListener("DOMContentLoaded", function () {
   createList();
+
+  document.addEventListener("copy", (event) => copySources(event));
 
   document.getElementById("clear").addEventListener("click", function () {
     let choice = confirm("Do you wish to empty this sourcelist? (This cannot be undone!)");
@@ -15,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("update").addEventListener("click", function () {
     createList();
+  });
+
+  document.getElementById("copySources").addEventListener("click", function () {
+    copySources();
   });
 
   document.getElementById("body").addEventListener("keydown", (event) => {
@@ -36,7 +43,7 @@ function createList() {
       document.getElementById("sources").innerHTML = "Add some sources to begin!";
       document.getElementById("btnList").innerHTML = "";
     } else {
-      let preSourceList = data.source;
+      preSourceList = data.source;
       let sourceList = [];
       let buttonList = [];
       preSourceList.forEach((Element) => {
@@ -149,5 +156,38 @@ function removeSource(num) {
       storage.set({ source: sourceList });
       createList();
     });
+  }
+}
+
+function copySources(event = undefined) {
+  let copyContent = "";
+  if (preSourceList == "" || preSourceList == undefined) {
+    copyContent = "Nothing to copy...";
+  } else {
+    preSourceList.forEach((element) => {
+      copyContent +=
+        "<label>" +
+        element[0] +
+        ", " +
+        element[1] +
+        ". " +
+        '<a href="' +
+        element[2] +
+        '" target="_blank">' +
+        element[2] +
+        "</a>, [" +
+        element[3] +
+        "]</label><br><br>";
+    });
+  }
+  if (event) {
+    event.clipboardData.setData("text/html", copyContent);
+    //document.getSelection()
+    event.preventDefault();
+  } else {
+    let type = "text/html";
+    let blob = new Blob([copyContent], { type });
+    let data = [new ClipboardItem({ [type]: blob })];
+    navigator.clipboard.write(data);
   }
 }
