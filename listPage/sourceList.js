@@ -3,7 +3,7 @@ let numberOfSources = 0;
 let storage = chrome.storage.largeSync;
 let preSourceList;
 
-//chrome.storage.largeSync.set({ source: "" });
+//chrome.storage.largeSync.set({ a: "" });
 
 document.addEventListener("DOMContentLoaded", function () {
   createList();
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("clear").addEventListener("click", function () {
     let choice = confirm("Do you wish to empty this sourcelist? (This cannot be undone!)");
     if (choice) {
-      storage.set({ source: "" });
+      storage.set({ a: "" });
       createList();
     }
   });
@@ -40,13 +40,12 @@ function createList() {
   editingSourceNum = -1;
   numberOfSources = 0;
   document.getElementById("sources").innerHTML = "";
-  storage.get("source", function (data) {
-    alert(data.source);
-    if (data.source == "" || data.source == undefined) {
+  storage.get("a", function (data) {
+    if (data.a == "" || data.a == undefined) {
       document.getElementById("sources").innerHTML = "Add some sources to begin!";
       document.getElementById("btnList").innerHTML = "";
     } else {
-      preSourceList = data.source;
+      preSourceList = data.a;
       let sourceList = [];
       let buttonList = [];
       preSourceList.forEach((Element) => {
@@ -101,8 +100,8 @@ function editSource(num) {
     }
   } else {
     editingSourceNum = num;
-    storage.get("source", function (data) {
-      let edSource = data.source[num - 1];
+    storage.get("a", function (data) {
+      let edSource = data.a[num - 1];
       let editSource = document.getElementById("source" + num);
       editSource.innerHTML =
         '<p><span id="title" class="input rounded-3 px-2 border-solid border-black border-2" role="textbox" contenteditable>' +
@@ -141,10 +140,10 @@ function okEdit(num) {
     document.getElementById("url").innerText,
     document.getElementById("date").innerText,
   ];
-  storage.get("source", function (data) {
-    let sources = data.source;
+  storage.get("a", function (data) {
+    let sources = data.a;
     sources.splice(num - 1, 1, sourceNow);
-    storage.set({ source: sources });
+    storage.set({ a: sources });
     createList();
   });
   editingSourceNum = -1;
@@ -153,10 +152,10 @@ function okEdit(num) {
 function removeSource(num) {
   let choice = confirm("Are you sure you want to remove this source?");
   if (choice) {
-    storage.get("source", function (data) {
-      let sourceList = data.source;
+    storage.get("a", function (data) {
+      let sourceList = data.a;
       sourceList.splice(num - 1, 1);
-      storage.set({ source: sourceList });
+      storage.set({ a: sourceList });
       createList();
     });
   }

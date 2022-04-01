@@ -47,13 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
       sourceNow,
       document.getElementById("date").value,
     ];
-    chrome.storage.largeSync.get("source", function (data) {
-      if (data.source == "") {
-        chrome.storage.largeSync.set({ source: [sourceNew] });
+    chrome.storage.largeSync.get("a", function (data) {
+      if (data.a == "" || data.a == undefined) {
+        chrome.storage.largeSync.set({ a: [sourceNew] });
       } else {
-        let newSource = data.source;
+        let newSource = data.a;
         newSource.push(sourceNew);
-        chrome.storage.largeSync.set({ source: newSource });
+        chrome.storage.largeSync.set({ a: newSource });
       }
     });
   });
