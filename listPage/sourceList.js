@@ -1,7 +1,9 @@
 let editingSourceNum = -1;
 let numberOfSources = 0;
-let storage = chrome.storage.sync;
+let storage = chrome.storage.largeSync;
 let preSourceList;
+
+//chrome.storage.largeSync.set({ source: "" });
 
 document.addEventListener("DOMContentLoaded", function () {
   createList();
@@ -39,7 +41,8 @@ function createList() {
   numberOfSources = 0;
   document.getElementById("sources").innerHTML = "";
   storage.get("source", function (data) {
-    if (data.source == "") {
+    alert(data.source);
+    if (data.source == "" || data.source == undefined) {
       document.getElementById("sources").innerHTML = "Add some sources to begin!";
       document.getElementById("btnList").innerHTML = "";
     } else {
