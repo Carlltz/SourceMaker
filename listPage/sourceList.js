@@ -47,20 +47,17 @@ function createList() {
     } else {
       preSourceList = data.a;
       let sourceList = [];
-      let buttonList = [];
       preSourceList.forEach((Element) => {
         numberOfSources++;
-        buttonList.push(
-          '<li id="btnPair' +
+        sourceList.push(
+          '<div style="display: flex; flex-direction: row; margin-bottom: 5pt"><div class="unselectable" style="white-space: nowrap; flex-direction: row; margin-right: 5pt" id="btnPair' +
             numberOfSources +
             '"><button id="del' +
             numberOfSources +
-            '" class="mr-1 bg-red-500 hover:bg-red-400 text-white py-0 px-1 border-b-2 border-red-500 hover:border-red-400 rounded">Delete</button><button id="edit' +
+            '" class="smallButton redButton text textSmall" style="margin-right: 2pt;">Delete</button><button id="edit' +
             numberOfSources +
-            '" class="bg-blue-500 hover:bg-blue-400 text-white py-0 px-1 border-b-2 border-blue-500 hover:border-blue-400 rounded">Edit</button></li>'
-        );
-        sourceList.push(
-          '<li style="display: flex; flex-wrap: wrap;" id="source' +
+            '" class="smallButton blueButton text textSmall">Edit</button>' +
+            '</div><div style="flex-wrap: wrap;" id="source' +
             numberOfSources +
             '"><p>' +
             Element[0] +
@@ -73,10 +70,9 @@ function createList() {
             Element[2] +
             "</a>, [" +
             Element[3] +
-            "]</p></li>"
+            "]</p></div></div>"
         );
       });
-      document.getElementById("btnList").innerHTML = buttonList.join("");
       document.getElementById("sources").innerHTML = sourceList.join("");
       for (let i = 1; i <= numberOfSources; i++) {
         document.getElementById("del" + i).addEventListener("click", function () {
@@ -183,11 +179,12 @@ function copySources(event = undefined) {
     });
   }
   if (event) {
-    event.clipboardData.setData("text/html", copyContent);
+    console.log(document.getSelection().toString());
+    event.clipboardData.setData("text/plain", document.getSelection());
     //document.getSelection()
     event.preventDefault();
   } else {
-    let type = "text/html";
+    let type = "text/plain";
     let blob = new Blob([copyContent], { type });
     let data = [new ClipboardItem({ [type]: blob })];
     navigator.clipboard.write(data);

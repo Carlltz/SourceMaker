@@ -1,0 +1,22 @@
+.containerDIV {
+  font-size: 12pt;
+  float: left;
+  width: 95%;
+  margin-left: 7pt;
+  margin-bottom: 7pt;
+}
+li {
+  height: 25pt;
+  display: flex;
+  align-items: center;
+}
+.sources {
+  font-family: "Times New Roman", Times, serif;
+  color: white;
+  align-items: flex-start;
+}
+body {
+  background-color: rgb(44, 44, 44);
+  background-size: stretch;
+  margin: 0px;
+}
