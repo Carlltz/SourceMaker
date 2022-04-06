@@ -46,12 +46,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("saveSource").addEventListener("click", function () {
-    let sourceNew = [
-      document.getElementById("site").value,
-      document.getElementById("title").value,
-      sourceNow,
-      document.getElementById("dateH").value,
-    ];
+    let sourceNew = {
+      site: document.getElementById("site").value,
+      title: document.getElementById("title").value,
+      url: sourceNow,
+      dateH: document.getElementById("dateH").value,
+      dateP: document.getElementById("dateP").value,
+      author: document.getElementById("author").value,
+    };
+    console.log(sourceNew);
     chrome.storage.largeSync.get("a", function (data) {
       if (data.a == "" || data.a == undefined) {
         chrome.storage.largeSync.set({ a: [sourceNew] });

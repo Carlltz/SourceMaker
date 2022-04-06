@@ -11,7 +11,7 @@ chrome.runtime.sendMessage({
 function getTitle() {
   let response;
   try {
-    response = document.getElementsByTagName("title")[0].innerText.split(/-|:|–|\|/g);
+    response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
     response = response[0].trim();
   } catch (e) {
     response = window.location.href.split(/\//g);
