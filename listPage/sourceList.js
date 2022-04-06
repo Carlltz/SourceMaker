@@ -64,7 +64,7 @@ function createList() {
             ", " +
             Element[1] +
             ". " +
-            '<a style="color: #1155cc" href="' +
+            '<a style="color: #1155cc; text-decoration: underline;" href="' +
             Element[2] +
             '" target="_blank">' +
             Element[2] +
@@ -111,17 +111,7 @@ function editSource(num) {
         "</span>]</p>";
 
       document.getElementById("btnPair" + num).innerHTML =
-        '<button id="del' +
-        num +
-        '" class="mr-1 bg-red-500 hover:bg-red-400 text-white py-0 px-1 border-b-2 border-red-500 hover:border-red-400 rounded">Delete</button><button id="ok' +
-        num +
-        '" class="bg-green-500 hover:bg-green-400 text-white py-0 px-1 border-b-2 border-green-500 hover:border-green-400 rounded">Ok</button></li>';
-      document.getElementById("del" + num).addEventListener("click", function () {
-        removeSource(num);
-      });
-      for (let i = 1; i <= numberOfSources; i++) {
-        document.getElementById("del" + i).disabled = true;
-      }
+        '<button id="ok' + num + '" class="smallButton greenButton text textSmall">Ok</button></li>';
       document.getElementById("ok" + num).addEventListener("click", function () {
         okEdit(num);
       });

@@ -1,9 +1,11 @@
-//TestEdit!
+siteName = getSite();
 chrome.runtime.sendMessage({
   action: "getHTML",
   title: getTitle(),
-  site: getSite(),
-  url: window.location.href,
+  site: siteName,
+  url: getURL(),
+  dateP: getPageDate(),
+  author: getAuthor(),
 });
 
 function getTitle() {
@@ -67,4 +69,20 @@ function getSite() {
   } else {
     return getTitleSite("");
   }
+}
+
+function getURL() {
+  if (siteName.toLowerCase() != "wikipedia") return window.location.href;
+  else {
+    let permaLink = document.getElementById("t-permalink");
+    return "https://" + document.documentElement.lang + ".wikipedia.org" + permaLink.children[0].getAttribute("href");
+  }
+}
+
+function getPageDate() {
+  return "";
+}
+
+function getAuthor() {
+  return "";
 }

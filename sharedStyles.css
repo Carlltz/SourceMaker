@@ -10,6 +10,12 @@
   --activeButton: rgba(255, 85, 85, 1);
 }
 
+.greenButton {
+  --mainBackgroundColor: rgba(34, 197, 94, 0.8);
+  --mainBorderColor: rgba(34, 197, 94, 0.9);
+  --activeButton: rgba(34, 197, 94, 1);
+}
+
 .button {
   background-color: var(--mainBackgroundColor);
   border: 2px solid var(--mainBorderColor);

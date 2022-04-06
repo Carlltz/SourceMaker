@@ -9,18 +9,23 @@ chrome.runtime.onMessage.addListener(function (request) {
     }
 
     if (request.action == "getHTML") {
+      console.log(request);
       console.log(latestWebsite);
       if (latestWebsite.url == request.url) {
         document.getElementById("title").innerText = latestWebsite.title;
         document.getElementById("site").innerText = latestWebsite.site;
-        document.getElementById("date").innerText = latestWebsite.date;
+        document.getElementById("dateH").innerText = latestWebsite.dateH;
+        document.getElementById("dateP").innerText = request.dateP;
+        document.getElementById("author").innerText = latestWebsite.author;
         sourceNow = latestWebsite.url;
       } else {
-        let today = new Date().toLocaleDateString("SE");
+        let today = new Date().toLocaleDateString("sv-se");
         //content.innerText = request.site + ', "' + request.title + '". ' + request.url + ", [" + today + "]";
         document.getElementById("title").innerText = request.title;
         document.getElementById("site").innerText = request.site;
-        document.getElementById("date").innerText = today;
+        document.getElementById("dateH").innerText = today;
+        document.getElementById("dateP").innerText = request.dateP;
+        document.getElementById("author").innerText = request.author;
         sourceNow = request.url;
         updateStorage();
       }
@@ -45,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("site").value,
       document.getElementById("title").value,
       sourceNow,
-      document.getElementById("date").value,
+      document.getElementById("dateH").value,
     ];
     chrome.storage.largeSync.get("a", function (data) {
       if (data.a == "" || data.a == undefined) {
@@ -64,7 +69,13 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("site").addEventListener("change", function () {
     updateStorage();
   });
-  document.getElementById("date").addEventListener("change", function () {
+  document.getElementById("dateH").addEventListener("change", function () {
+    updateStorage();
+  });
+  document.getElementById("dateP").addEventListener("change", function () {
+    updateStorage();
+  });
+  document.getElementById("author").addEventListener("change", function () {
     updateStorage();
   });
 });
@@ -74,7 +85,9 @@ function updateStorage() {
     site: document.getElementById("site").value,
     title: document.getElementById("title").value,
     url: sourceNow,
-    date: document.getElementById("date").value,
+    dateH: document.getElementById("dateH").value,
+    dateP: document.getElementById("dateP").value,
+    author: document.getElementById("author").value,
   };
   chrome.storage.sync.set({ latestWebsite: newLatest });
 }
