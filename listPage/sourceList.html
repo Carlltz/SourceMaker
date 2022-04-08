@@ -17,16 +17,15 @@
     <link href="sourceList.css" rel="stylesheet" />
     <link href="/sharedStyles.css" rel="stylesheet" />
   </head>
-  <body id="body" style="width: 100%">
+  <body id="body" style="width: 100%; height: 100%">
     <div class="containerDIV">
-      <div>
-        <button id="clear" class="button redButton text" style="margin-top: 8pt">Clear sources</button>
-        <button id="update" class="button blueButton text" style="margin-top: 8pt">Update</button>
-        <button id="copySources" class="button blueButton text" style="margin-top: 8pt">Copy sources</button>
+      <div style="flex-wrap: nowrap; display: flex; column-gap: 0.3rem" class="unselectable">
+        <button id="clear" class="button redButton text" style="margin-top: 8pt">CLEAR</button>
+        <button id="update" class="button blueButton text" style="margin-top: 8pt">RELOAD</button>
+        <button id="copySources" class="button blueButton text" style="margin-top: 8pt">COPY TO CLIPBOARD</button>
       </div>
       <div style="display: flex; justify-content: flex-start; margin-top: 3pt">
-        <ul id="btnList" style="margin-right: 4pt"></ul>
-        <div id="sources" class="sources">
+        <div id="sources" class="sources" style="margin-left: 4pt">
           <p>Add some sources to begin!</p>
         </div>
       </div>

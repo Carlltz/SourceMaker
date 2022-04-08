@@ -1,14 +1,9 @@
 .containerDIV {
-  font-size: 12pt;
+  font-size: 1rem;
   float: left;
-  width: 95%;
   margin-left: 7pt;
   margin-bottom: 7pt;
-}
-li {
-  height: 25pt;
-  display: flex;
-  align-items: center;
+  margin-right: 7pt;
 }
 .sources {
   font-family: "Times New Roman", Times, serif;
@@ -19,4 +14,6 @@ body {
   background-color: rgb(44, 44, 44);
   background-size: stretch;
   margin: 0px;
+  padding: 0;
+  height: 100%;
 }

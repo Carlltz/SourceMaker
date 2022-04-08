@@ -35,14 +35,16 @@
 .text {
   color: white;
   font-weight: 500;
-  /*   font-size: 1.2rem;
-  line-height: 1.5rem; */
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .textBigger {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+.textStandard {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 }
 /* .textSmall {
   font-size: 0.5rem;
@@ -71,4 +73,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+[content]::after {
+  content: attr(content);
 }

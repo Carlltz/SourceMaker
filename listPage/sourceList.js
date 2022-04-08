@@ -8,7 +8,7 @@ let preSourceList;
 document.addEventListener("DOMContentLoaded", function () {
   createList();
 
-  //document.addEventListener("copy", (event) => copySources(event));
+  document.addEventListener("copy", (event) => copySources(event));
 
   document.getElementById("clear").addEventListener("click", function () {
     let choice = confirm("Do you wish to empty this sourcelist? (This cannot be undone!)");
@@ -55,12 +55,13 @@ function createList() {
           numberOfSources +
           '"><button id="del' +
           numberOfSources +
-          '" class="smallButton redButton text textSmall" style="margin-right: 2pt;">Delete</button><button id="edit' +
+          '" class="smallButton redButton text textSmall" style="margin-right: 2pt;" content="Delete"></button><button id="edit' +
           numberOfSources +
-          '" class="smallButton blueButton text textSmall">Edit</button>' +
-          '</div><div style="flex-wrap: wrap;" id="source' +
+          '" class="smallButton blueButton text textSmall" content="Edit"></button>' +
+          "</div>" +
+          '<div style="padding-right: 1rem" id="source' + //padding 1rem to make it easier to select
           numberOfSources +
-          '"><p>';
+          '">';
         if (Element.author == "") {
           source +=
             Element.site +
@@ -69,13 +70,14 @@ function createList() {
             Element.title +
             "</i>" +
             ". " +
+            (Element.dateP != "" ? Element.dateP + ". " : "") +
             '<a style="color: #1155cc; text-decoration: underline;" href="' +
             Element.url +
             '" target="_blank">' +
             Element.url +
             "</a> (Hämtad " +
             Element.dateH +
-            ")</p></div></div>";
+            ")</div></div>";
         } else {
           source +=
             Element.author +
@@ -86,13 +88,14 @@ function createList() {
             ". " +
             Element.site +
             ". " +
+            (Element.dateP != "" ? Element.dateP + ". " : "") +
             '<a style="color: #1155cc; text-decoration: underline;" href="' +
             Element.url +
             '" target="_blank">' +
             Element.url +
             "</a> (Hämtad " +
             Element.dateH +
-            ")</p></div></div>";
+            ")</div></div>";
         }
         sourceList.push(source);
       });
@@ -170,36 +173,61 @@ function removeSource(num) {
   }
 }
 
-function copySources(event = undefined) {
-  let copyContent = "";
-  if (preSourceList == "" || preSourceList == undefined) {
-    copyContent = "Nothing to copy...";
-  } else {
-    preSourceList.forEach((element) => {
-      copyContent +=
-        "<label>" +
-        element.site +
-        ", " +
-        element.title +
-        ". " +
-        '<a href="' +
-        element.url +
-        '" target="_blank">' +
-        element.url +
-        "</a>, [" +
-        element.dateH +
-        "]</label><br><br>";
-    });
-  }
+function copySources(event = null) {
+  //If ctrl+c
   if (event) {
     console.log(document.getSelection().toString());
     event.clipboardData.setData("text/html", document.getSelection());
     //document.getSelection()
     event.preventDefault();
-  } else {
-    let type = "text/html";
-    let blob = new Blob([copyContent], { type });
-    let data = [new ClipboardItem({ [type]: blob })];
-    navigator.clipboard.write(data);
+    return;
   }
+
+  //If copy button pressed
+  let copyContent = "";
+  if (preSourceList == "" || preSourceList == undefined) {
+    alert("Nothing to copy...");
+  } else {
+    preSourceList.forEach((element) => {
+      if (element.author == "") {
+        copyContent +=
+          "<label>" +
+          element.site +
+          ", " +
+          element.title +
+          ". " +
+          (element.dateP != "" ? element.dateP + ". " : "") +
+          '<a href="' +
+          element.url +
+          '" target="_blank">' +
+          element.url +
+          "</a> (Hämtad " +
+          element.dateH +
+          ")</label><br><br>";
+      } else {
+        copyContent +=
+          "<label>" +
+          element.author +
+          ". " +
+          "<i>" +
+          element.title +
+          "</i>" +
+          ". " +
+          element.site +
+          ". " +
+          (element.dateP != "" ? element.dateP + ". " : "") +
+          '<a href="' +
+          element.url +
+          '" target="_blank">' +
+          element.url +
+          "</a> (Hämtad " +
+          element.dateH +
+          ")</label><br><br>";
+      }
+    });
+  }
+  let type = "text/html";
+  let blob = new Blob([copyContent], { type });
+  let data = [new ClipboardItem({ [type]: blob })];
+  navigator.clipboard.write(data);
 }
