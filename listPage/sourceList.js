@@ -55,9 +55,9 @@ function createList() {
           numberOfSources +
           '"><button id="del' +
           numberOfSources +
-          '" class="smallButton redButton text textSmall" style="margin-right: 2pt;" content="Delete"></button><button id="edit' +
+          '" class="smallButton redButton text" style="margin-right: 2pt;" content="Delete"></button><button id="edit' +
           numberOfSources +
-          '" class="smallButton blueButton text textSmall" content="Edit"></button>' +
+          '" class="smallButton blueButton text" content="Edit"></button>' +
           "</div>" +
           '<div style="padding-right: 1rem" id="source' + //padding 1rem to make it easier to select
           numberOfSources +
@@ -137,7 +137,7 @@ function editSource(num) {
         "</span>]</p>";
 
       document.getElementById("btnPair" + num).innerHTML =
-        '<button id="ok' + num + '" class="smallButton greenButton text textSmall">Ok</button></li>';
+        '<button id="ok' + num + '" class="smallButton greenButton text">Ok</button></li>';
       document.getElementById("ok" + num).addEventListener("click", function () {
         okEdit(num);
       });

@@ -15,41 +15,64 @@
     <script language="javascript" src="/libraries/chrome-Storage-largeSync.js"></script>
     <meta charset="utf-8" />
     <title>Source Maker</title>
-    <script src="../exceptions.js"></script>
-    <script src="../getPageHTML.js"></script>
-    <script src="popup.js"></script>
+    <script type="module" src="popup.js"></script>
     <link href="popup.css" rel="stylesheet" />
     <link href="/sharedStyles.css" rel="stylesheet" />
   </head>
   <body style="width: 290pt" class="mainDiv">
-    <div class="banner">
-      <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly; padding: 1rem 0rem">
-        <button class="button blueButton text textBigger" id="openSourceList">REFERENCE LIST</button>
-        <button class="button blueButton text textBigger" id="saveSource">ADD</button>
-      </div>
-      <!--     <input list="test" name="yazz" />
+    <div id="standardDIV">
+      <div class="banner">
+        <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly; padding: 1rem 0rem">
+          <button class="button blueButton text textBigger" id="openSourceList">REFERENCE LIST</button>
+          <button class="button blueButton text textBigger" id="saveSource">ADD</button>
+        </div>
+        <!--     <input list="test" name="yazz" />
     <datalist id="test">
         <option value="red">
         <option value="blue">
     </datalist> -->
+      </div>
+      <div style="text-align: center">
+        <label class="text" for="title">Title:</label>
+        <textarea style="padding: 0rem 0.2rem" id="title" name="title" rows="2"></textarea>
+
+        <label class="text" for="site">Website:</label>
+        <textarea style="padding: 0rem 0.2rem" id="site" name="site" rows="2"></textarea>
+
+        <label class="text" for="dateH">Date visited:</label>
+        <textarea style="padding: 0rem 0.2rem" id="dateH" name="dateH" rows="2"></textarea>
+
+        <label class="text" for="dateP">Date published:</label>
+        <textarea style="padding: 0rem 0.2rem" id="dateP" name="dateP" rows="2"></textarea>
+
+        <label class="text" for="author">Author:</label>
+        <textarea style="padding: 0rem 0.2rem" id="author" name="author" rows="2"></textarea>
+
+        <button id="report" class="button redButton text textSmall" style="margin-bottom: 0.4rem">
+          Report wrong/missing element
+        </button>
+      </div>
+      <div id="addedSource" class="addedSource text displayNone">Added source</div>
     </div>
-    <div style="text-align: center">
-      <label class="text" for="title">Titel:</label>
-      <textarea style="padding: 0rem 0.2rem" id="title" name="title" rows="2"></textarea>
-
-      <label class="text" for="site">Hemsida:</label>
-      <textarea style="padding: 0rem 0.2rem" id="site" name="site" rows="2"></textarea>
-
-      <label class="text" for="dateH">Datum hämtad:</label>
-      <textarea style="padding: 0rem 0.2rem" id="dateH" name="dateH" rows="2"></textarea>
-
-      <label class="text" for="dateP">Datum publicerad:</label>
-      <textarea style="padding: 0rem 0.2rem" id="dateP" name="dateP" rows="2"></textarea>
-
-      <label class="text" for="author">Skribent:</label>
-      <textarea style="padding: 0rem 0.2rem" id="author" name="author" rows="2"></textarea>
+    <div id="reportDIV" style="align-items: center; text-align: center; padding-bottom: 0.4rem" class="displayNone">
+      <div class="banner" style="margin-bottom: 0.4rem">
+        <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly; padding: 0.6rem 0rem">
+          <h1 class="text">Report form</h1>
+        </div>
+      </div>
+      <p class="text" style="margin: 0.4rem">
+        Thanks for helping out with the development! <br />Please provide an explanation to your problem. <br />(This
+        websites url will be sent automatically)
+      </p>
+      <textarea
+        style="padding: 0rem 0.2rem"
+        id="reportText"
+        name="reportText"
+        rows="4"
+        placeholder="Explain your problem here..."
+      ></textarea>
+      <button id="sendForm" class="button blueButton text">Send</button>
     </div>
-    <div id="addedSource" class="addedSource text displayNone">Added source</div>
     <!--     <div id='content'>Loading...</div> -->
   </body>
 </html>

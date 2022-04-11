@@ -46,10 +46,10 @@
   font-size: 1.2rem;
   line-height: 1.5rem;
 }
-/* .textSmall {
-  font-size: 0.5rem;
+.textSmall {
+  font-size: 1rem;
   line-height: 0.8rem;
-} */
+}
 .smallButton {
   background-color: var(--mainBackgroundColor);
   border: 1px solid var(--mainBorderColor);
@@ -79,27 +79,4 @@
   content: attr(content);
 }
 
-.addedSource {
-  position: absolute;
-  top: 70px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  background-color: rgba(20, 20, 20, 0.9);
-  padding: 4px 10px;
-  border-radius: 10px;
 
-  -webkit-transition: opacity 1s ease-out;
-  -moz-transition: opacity 1s ease-out;
-  -ms-transition: opacity 1s ease-out;
-  -o-transition: opacity 1s ease-out;
-  transition: opacity 1s ease-out;
-  opacity: 1;
-}
-
-.addedSource.hide {
-  opacity: 0;
-}
-
-.displayNone {
-  display: none;
-}

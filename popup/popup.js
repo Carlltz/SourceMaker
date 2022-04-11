@@ -83,6 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("author").addEventListener("change", function () {
     updateStorage();
   });
+  document.getElementById("report").addEventListener("click", function () {
+    document.getElementById("standardDIV").classList.add("displayNone");
+    document.getElementById("reportDIV").classList.remove("displayNone");
+  });
+  document.getElementById("sendForm").addEventListener("click", function () {
+    document.getElementById("reportDIV").classList.add("displayNone");
+    document.getElementById("standardDIV").classList.remove("displayNone");
+  });
 });
 
 function updateStorage() {
@@ -106,7 +114,7 @@ async function test() {
   addedPopup.classList.remove("hide");
   addedPopup.classList.add("displayNone");
   addedPopup.classList.remove("displayNone");
-  await sleep(500);
+  await sleep(400);
   addedPopup.classList.add("hide");
   await sleep(1000);
   addedPopup.classList.remove("hide");

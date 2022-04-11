@@ -1,86 +1,98 @@
 siteName = getSite();
+ytFetch = null;
+function start() {
+  if (document.getElementById("channel-container")) {
+    afterSetup();
+  } else if (siteName.toLowerCase() == "youtube" && !document.getElementById("watch7-content")) {
+    let id = getVideoId();
+    fetch(
+      "https://www.googleapis.com/youtube/v3/videos?id=" +
+        id +
+        "&part=snippet&key=AIzaSyDauIAQOBb5H4rZqxnipSJieQfuGnkeJIs"
+    ).then((response) => {
+      response.json().then((res) => {
+        ytFetch = res.items[0].snippet;
+        afterSetup();
+      });
+    });
+  } else {
+    afterSetup();
+  }
+}
+start();
 
-chrome.runtime.sendMessage({
-  action: "getHTML",
-  title: getTitle(),
-  site: siteName,
-  url: getURL(),
-  dateP: getDateP(),
-  author: getAuthor(),
-});
+function getVideoId() {
+  return window.location.href.match(/(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/i)[3];
+}
+
+function afterSetup() {
+  chrome.runtime.sendMessage({
+    action: "getHTML",
+    title: getTitle(),
+    site: siteName,
+    url: getURL(),
+    dateP: getDateP(),
+    author: getAuthor(),
+  });
+}
 
 function getTitle() {
+  let exceptionTit = exceptionTitle();
+  if (exceptionTit != null) return exceptionTit;
   let response;
-  try {
-    let sitething = document.querySelectorAll("[property]");
-    for (let i = 0; i < 100; i++) {
-      console.log(sitething[i].getAttribute("property"));
-      if (sitething[i].getAttribute("property") == "og:title") {
-        response = sitething[i].getAttribute("content").split(/[-:–\|]/g);
-        return response[0];
-      }
-    }
-  } catch {
-    try {
-      response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
-      response = response[0].trim();
-    } catch (e) {
-      response = window.location.href.split(/\//g);
-      response = response[response.length - 1].replace(/-/g, " ");
-      response = response.replace(/.pdf/g, "");
+  let sitething = document.querySelectorAll("[property]");
+  for (let i = 0; i < sitething.length; i++) {
+    if (sitething[i].getAttribute("property") == "og:title") {
+      //response = sitething[i].getAttribute("content").split(/[-:–\|]/g);
+      response = sitething[i].getAttribute("content").split("|");
+      return response[0];
     }
   }
-
+  try {
+    response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
+    response = response[0];
+  } catch {
+    response = window.location.href.split(/\//g);
+    response = response[response.length - 1].replace(/-/g, " ");
+    response = response.replace(/.pdf/g, "");
+  }
   return response;
+}
+function exceptionTitle() {
+  if (siteName.toLowerCase() == "wikipedia") {
+    response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
+    return response[0].trim();
+  }
 }
 
 function getSite() {
-  try {
-    // Really not optimal to loop through sitething, should be able to find "value" in sitething instead...
-    sitething = document.querySelectorAll("[property]");
-    for (let i = 0; i < 10; i++) {
-      if (sitething[i].getAttribute("property") == "og:site_name") {
-        return sitething[i].getAttribute("content");
-      }
+  // Really not optimal to loop through sitething, should be able to find "value" in sitething instead...
+  let sitething = document.querySelectorAll("[property]");
+  for (let i = 0; i < sitething.length; i++) {
+    if (sitething[i].getAttribute("property") == "og:site_name") {
+      return sitething[i].getAttribute("content");
     }
-    throw "Continue!";
-  } catch {
-    var siteUrl = getUrlSite();
+  } //Continues if no elements with the property "og:site_name"
+  let site = getUrlSite();
+  let titleSite = document.getElementsByTagName("title")[0].innerText;
+  let index = titleSite.toLowerCase().search(site.toLowerCase());
+  if (index != -1) {
+    return titleSite.substring(index, index + site.length);
   }
 
-  function getTitleSite(part) {
+  return site;
+
+  function getTitleSiteOLD(part) {
     let response;
     response = document.getElementsByTagName("title")[0].innerText;
-    if (part == "a") {
-      return response;
-    }
+
     response = response.split(/-:–\|\./g);
-    let preResponse = response[response.length - 1];
-    if (["se", "com", "net"].includes(preResponse)) {
-      preResponse = response[response.length - 2];
-    }
-    return preResponse.trim();
   }
 
   function getUrlSite() {
     let url = window.location.href.split(/\./g);
-    if (["www", "https://www", "http://www", "http://"].includes(url[0])) {
-      return url[1][0].toUpperCase() + url[1].slice(1);
-    } else {
-      url = url[0].split(/\//g);
-      return url[url.length - 1];
-    }
-  }
-
-  try {
-    var siteTitle = getTitleSite("a");
-  } catch {
-    return siteUrl[0].toUpperCase() + siteUrl.slice(1);
-  }
-  if (siteTitle.toLowerCase().includes(siteUrl.toLowerCase())) {
-    return siteUrl[0].toUpperCase() + siteUrl.slice(1);
-  } else {
-    return getTitleSite("");
+    //console.log(url[0].match(/https?:\/\/(.{0,3}\.)?/g));
+    return url[1][0].toUpperCase() + url[1].slice(1);
   }
 }
 
@@ -93,41 +105,45 @@ function getURL() {
 }
 
 function getDateP() {
-  if (siteName.toLowerCase() == "youtube") {
-    return exceptionsDateP("youtube");
-  }
+  let exceptionDate = exceptionsDateP();
+  if (exceptionDate != null) return exceptionDate;
   return "";
 }
 
 function getAuthor() {
-  if (siteName.toLowerCase() == "youtube") {
-    return exceptionsAuthor("youtube");
-  }
+  let exceptionAuthor = exceptionsAuthor();
+  if (exceptionAuthor != null) return exceptionAuthor;
   return "";
 }
 
-function exceptionsDateP(site) {
-  if (site == "youtube") {
+function exceptionsDateP() {
+  if (ytFetch != null) return ytFetch.publishedAt.split("T")[0];
+  if (siteName.toLowerCase() == "youtube") {
     let date = document.getElementById("watch7-content");
-    date = date.children;
-    for (let i = 0; i < date.length; i++) {
-      if (date[i].getAttribute("itemprop") == "datePublished") {
-        return date[i].getAttribute("content");
+    if (date) {
+      date = date.children;
+      for (let i = 0; i < date.length; i++) {
+        if (date[i].getAttribute("itemprop") == "datePublished") {
+          return date[i].getAttribute("content");
+        }
       }
     }
-    return "";
   }
+  return null;
 }
 
-function exceptionsAuthor(site) {
-  if (site == "youtube") {
+function exceptionsAuthor() {
+  if (ytFetch != null) return ytFetch.channelTitle;
+  if (siteName.toLowerCase() == "youtube") {
     let channel = document.getElementById("watch7-content");
-    channel = channel.children;
-    for (let i = 0; i < channel.length; i++) {
-      if (channel[i].getAttribute("itemprop") == "author") {
-        return channel[i].children[1].getAttribute("content");
+    if (channel) {
+      channel = channel.children;
+      for (let i = 0; i < channel.length; i++) {
+        if (channel[i].getAttribute("itemprop") == "author") {
+          return channel[i].children[1].getAttribute("content");
+        }
       }
     }
-    return "";
   }
+  return null;
 }

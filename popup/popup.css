@@ -1,5 +1,7 @@
 textarea {
   width: 98%;
+  border-radius: 0.4rem;
+  border-color: rgb(0 0 0);
 }
 .borderDIV {
   border-radius: 3pt;
@@ -17,10 +19,7 @@ textarea {
   margin-top: 6pt;
   margin-bottom: 8pt;
 }
-textarea {
-  border-radius: 0.4rem;
-  border-color: rgb(0 0 0);
-}
+
 .banner {
   display: flex;
   flex-wrap: nowrap;
@@ -31,4 +30,29 @@ textarea {
   border-bottom: 3pt solid rgb(50, 50, 50);
   border-bottom-right-radius: 1.2rem;
   border-bottom-left-radius: 1.2rem;
+}
+
+.addedSource {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: rgba(20, 20, 20, 0.9);
+  padding: 4px 10px;
+  border-radius: 10px;
+
+  -webkit-transition: opacity 0.7s ease-out;
+  -moz-transition: opacity 0.7s ease-out;
+  -ms-transition: opacity 0.7s ease-out;
+  -o-transition: opacity 0.7s ease-out;
+  transition: opacity 0.7s ease-out;
+  opacity: 1;
+}
+
+.addedSource.hide {
+  opacity: 0;
+}
+
+.displayNone {
+  display: none;
 }
