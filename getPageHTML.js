@@ -1,33 +1,46 @@
 siteName = getSite();
+
 chrome.runtime.sendMessage({
   action: "getHTML",
   title: getTitle(),
   site: siteName,
   url: getURL(),
-  dateP: getPageDate(),
+  dateP: getDateP(),
   author: getAuthor(),
 });
 
 function getTitle() {
   let response;
   try {
-    response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
-    response = response[0].trim();
-  } catch (e) {
-    response = window.location.href.split(/\//g);
-    response = response[response.length - 1].replace(/-/g, " ");
-    response = response.replace(/.pdf/g, "");
+    let sitething = document.querySelectorAll("[property]");
+    for (let i = 0; i < 100; i++) {
+      console.log(sitething[i].getAttribute("property"));
+      if (sitething[i].getAttribute("property") == "og:title") {
+        response = sitething[i].getAttribute("content").split(/[-:–\|]/g);
+        return response[0];
+      }
+    }
+  } catch {
+    try {
+      response = document.getElementsByTagName("title")[0].innerText.split(/[-:–\|]/g);
+      response = response[0].trim();
+    } catch (e) {
+      response = window.location.href.split(/\//g);
+      response = response[response.length - 1].replace(/-/g, " ");
+      response = response.replace(/.pdf/g, "");
+    }
   }
+
   return response;
 }
 
 function getSite() {
   try {
     // Really not optimal to loop through sitething, should be able to find "value" in sitething instead...
+    sitething = document.querySelectorAll("[property]");
     for (let i = 0; i < 10; i++) {
-      sitething = document.querySelectorAll("[property]")[i];
-      if (sitething.getAttribute("property") == "og:site_name") {
-        return sitething.content;
+      if (sitething[i].getAttribute("property") == "og:site_name") {
+        return sitething[i].getAttribute("content");
       }
     }
     throw "Continue!";
@@ -41,7 +54,7 @@ function getSite() {
     if (part == "a") {
       return response;
     }
-    response = response.split(/-|:|–|\||\./g);
+    response = response.split(/-:–\|\./g);
     let preResponse = response[response.length - 1];
     if (["se", "com", "net"].includes(preResponse)) {
       preResponse = response[response.length - 2];
@@ -79,10 +92,42 @@ function getURL() {
   }
 }
 
-function getPageDate() {
+function getDateP() {
+  if (siteName.toLowerCase() == "youtube") {
+    return exceptionsDateP("youtube");
+  }
   return "";
 }
 
 function getAuthor() {
+  if (siteName.toLowerCase() == "youtube") {
+    return exceptionsAuthor("youtube");
+  }
   return "";
+}
+
+function exceptionsDateP(site) {
+  if (site == "youtube") {
+    let date = document.getElementById("watch7-content");
+    date = date.children;
+    for (let i = 0; i < date.length; i++) {
+      if (date[i].getAttribute("itemprop") == "datePublished") {
+        return date[i].getAttribute("content");
+      }
+    }
+    return "";
+  }
+}
+
+function exceptionsAuthor(site) {
+  if (site == "youtube") {
+    let channel = document.getElementById("watch7-content");
+    channel = channel.children;
+    for (let i = 0; i < channel.length; i++) {
+      if (channel[i].getAttribute("itemprop") == "author") {
+        return channel[i].children[1].getAttribute("content");
+      }
+    }
+    return "";
+  }
 }

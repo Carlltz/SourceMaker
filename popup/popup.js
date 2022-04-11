@@ -1,4 +1,5 @@
 let sourceNow;
+
 chrome.runtime.onMessage.addListener(function (request) {
   let latestWebsite;
   chrome.storage.sync.get("latestWebsite", function (data) {
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("saveSource").addEventListener("click", function () {
+    test();
     let sourceNew = {
       site: document.getElementById("site").value,
       title: document.getElementById("title").value,
@@ -93,4 +95,20 @@ function updateStorage() {
     author: document.getElementById("author").value,
   };
   chrome.storage.sync.set({ latestWebsite: newLatest });
+}
+
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
+async function test() {
+  let addedPopup = document.getElementById("addedSource");
+  addedPopup.classList.remove("hide");
+  addedPopup.classList.add("displayNone");
+  addedPopup.classList.remove("displayNone");
+  await sleep(500);
+  addedPopup.classList.add("hide");
+  await sleep(1000);
+  addedPopup.classList.remove("hide");
+  addedPopup.classList.add("displayNone");
 }
