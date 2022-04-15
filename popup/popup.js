@@ -30,6 +30,10 @@ chrome.runtime.onMessage.addListener(function (request) {
         sourceNow = request.url;
         updateStorage();
       }
+      chrome.runtime.sendMessage({
+        action: "sendReport",
+        url: sourceNow,
+      });
     }
   });
 });
@@ -83,7 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("author").addEventListener("change", function () {
     updateStorage();
   });
-  document.getElementById("report").addEventListener("click", function () {
+  document.getElementById("reportError").addEventListener("click", function () {
+    console.log("HEfds");
     document.getElementById("standardDIV").classList.add("displayNone");
     document.getElementById("reportDIV").classList.remove("displayNone");
   });
@@ -92,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("standardDIV").classList.remove("displayNone");
   });
 });
-
 function updateStorage() {
   let newLatest = {
     site: document.getElementById("site").value,
